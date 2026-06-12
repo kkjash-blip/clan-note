@@ -58,10 +58,10 @@ export default function AIPage() {
         <div className="rounded-xl border p-4 mb-4" style={{ background: 'var(--card)', borderColor: 'var(--border)' }}>
           <div className="flex items-center justify-between mb-3">
             <div>
-              <div className="text-[12px] font-semibold" style={{ color: 'var(--text)' }}>🎬 2D 리플레이 파일 업로드</div>
-              <div className="text-[11px] mt-0.5" style={{ color: 'var(--text2)' }}>.rep / .dem 파일을 업로드하면 경기 데이터를 자동으로 분석합니다.</div>
+              <div className="text-[12px] font-semibold" style={{ color: 'var(--text)' }}>🎬 전장 리플레이 파일 업로드</div>
+              <div className="text-[11px] mt-0.5" style={{ color: 'var(--text2)' }}>.json 파일을 업로드하면 경기 데이터를 자동으로 분석합니다.</div>
             </div>
-            <input ref={fileRef} type="file" accept=".rep,.dem,.replay" className="hidden" onChange={handleReplayUpload} />
+            <input ref={fileRef} type="file" accept=".json" className="hidden" onChange={handleReplayUpload} />
             <button
               onClick={() => fileRef.current?.click()}
               disabled={replayParsing}
