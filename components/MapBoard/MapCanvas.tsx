@@ -49,7 +49,7 @@ function drawObject(ctx: CanvasRenderingContext2D, obj: DrawObject | PreviewObje
   } else if (obj.type === 'sticker') {
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.shadowColor = 'rgba(0,0,0,0.95)'; ctx.shadowBlur = 12;
-    ctx.font = '32px serif';
+    ctx.font = '22px serif';
     ctx.fillStyle = '#fff';
     ctx.fillText(obj.icon, obj.x, obj.y);
     ctx.shadowBlur = 0; ctx.font = 'bold 11px sans-serif';
