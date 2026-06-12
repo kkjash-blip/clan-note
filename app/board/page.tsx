@@ -112,10 +112,10 @@ export default function BoardPage() {
           {/* 좌측 하단 그룹: 링크 공유 + 음성 채널 버튼 + 팀원 현황 오버레이 */}
           <div className="absolute bottom-4 left-4 flex flex-col gap-2" style={{ zIndex: 10 }}>
             {/* 링크 공유 + 음성 채널 */}
-            <div className="flex gap-1.5">
+            <div className="flex gap-1.5" style={{ width: '238px' }}>
               <button
                 onClick={handleShare}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap"
+                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap"
                 style={{
                   border: copied ? '1px solid rgba(64,184,112,0.5)' : '1px solid var(--border2)',
                   background: copied ? 'rgba(64,184,112,0.15)' : 'rgba(13,13,26,0.9)',
@@ -127,7 +127,7 @@ export default function BoardPage() {
               </button>
               <button
                 onClick={() => window.open(DISCORD_INVITE, '_blank')}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all whitespace-nowrap hover:brightness-110"
+                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all whitespace-nowrap hover:brightness-110"
                 style={{ background: '#5865F2', color: '#fff', border: 'none', backdropFilter: 'blur(6px)' }}
               >
                 <svg width="13" height="10" viewBox="0 0 71 55" fill="none" xmlns="http://www.w3.org/2000/svg">
