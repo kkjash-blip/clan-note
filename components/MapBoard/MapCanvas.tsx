@@ -47,13 +47,15 @@ function drawObject(ctx: CanvasRenderingContext2D, obj: DrawObject | PreviewObje
     ctx.beginPath(); ctx.moveTo(obj.x1, obj.y1); ctx.lineTo(obj.x2, obj.y2); ctx.stroke();
     ctx.setLineDash([]);
   } else if (obj.type === 'sticker') {
-    ctx.font = '22px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.shadowBlur = 8;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.shadowColor = 'rgba(0,0,0,0.95)'; ctx.shadowBlur = 12;
+    ctx.font = '32px serif';
+    ctx.fillStyle = '#fff';
     ctx.fillText(obj.icon, obj.x, obj.y);
-    ctx.shadowBlur = 0; ctx.font = 'bold 10px sans-serif';
-    ctx.strokeStyle = 'rgba(0,0,0,0.9)'; ctx.lineWidth = 3;
-    ctx.strokeText(obj.label, obj.x, obj.y + 17);
-    ctx.fillStyle = '#fff'; ctx.fillText(obj.label, obj.x, obj.y + 17);
+    ctx.shadowBlur = 0; ctx.font = 'bold 11px sans-serif';
+    ctx.strokeStyle = 'rgba(0,0,0,0.95)'; ctx.lineWidth = 4;
+    ctx.strokeText(obj.label, obj.x, obj.y + 22);
+    ctx.fillStyle = '#fff'; ctx.fillText(obj.label, obj.x, obj.y + 22);
   } else if (obj.type === 'member') {
     const r = 13;
     ctx.shadowColor = obj.color; ctx.shadowBlur = 10;
