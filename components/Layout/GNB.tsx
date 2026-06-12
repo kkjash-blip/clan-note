@@ -18,7 +18,7 @@ export default function GNB() {
     <header className="flex items-center shrink-0 px-6 gap-1" style={{ height: '52px', background: 'var(--surface)', borderBottom: '1px solid var(--border)', zIndex: 50 }}>
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2.5 mr-6 shrink-0">
-        <div className="w-7 h-7 rounded-lg flex items-center justify-center text-[11px] font-bold shrink-0" style={{ background: 'var(--accent)', color: '#fff' }}>CN</div>
+        <div className="w-7 h-7 rounded-lg flex items-center justify-center text-[11px] font-bold shrink-0" style={{ background: 'var(--accent)', color: '#fff' }}>SA</div>
         <span className="text-[14px] font-bold" style={{ color: 'var(--text)' }}>클랜 노트</span>
         <span className="text-[10px] px-1.5 py-0.5 rounded font-semibold" style={{ background: 'rgba(108,99,255,0.2)', color: 'var(--accent2)' }}>BETA</span>
       </Link>
