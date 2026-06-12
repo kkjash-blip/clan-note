@@ -30,7 +30,7 @@ export default function MemberOverlay({ onPlaceMember }: Props) {
     <div
       className="flex flex-col rounded-xl overflow-hidden"
       style={{
-        width: '188px',
+        width: '238px',
         background: 'rgba(13,13,26,0.9)',
         border: '1px solid var(--border2)',
         backdropFilter: 'blur(10px)',
