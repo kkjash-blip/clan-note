@@ -7,6 +7,8 @@ import MemberOverlay from '@/components/MapBoard/MemberOverlay';
 import StickerPanel from '@/components/MapBoard/StickerPanel';
 import { useCanvas } from '@/hooks/useCanvas';
 
+const DISCORD_INVITE = 'https://discord.gg/your-clan';
+
 type PreviewObject =
   | { type: 'preview-path'; points: { x: number; y: number }[]; color: string; width: number }
   | { type: 'preview-arrow'; x1: number; y1: number; x2: number; y2: number; color: string; width: number }
@@ -17,6 +19,14 @@ const MapCanvas = dynamic(() => import('@/components/MapBoard/MapCanvas'), { ssr
 export default function BoardPage() {
   const [opName, setOpName] = useState('A사이트 속공');
   const [preview, setPreview] = useState<PreviewObject | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
 
   const canvasWrapRef = useRef<HTMLDivElement>(null);
 
@@ -99,8 +109,37 @@ export default function BoardPage() {
             </div>
           )}
 
-          {/* 팀원 배치 오버레이 — 좌측 하단 고정 */}
-          <MemberOverlay onPlaceMember={placeMember} />
+          {/* 좌측 하단 그룹: 링크 공유 + 음성 채널 버튼 + 팀원 현황 오버레이 */}
+          <div className="absolute bottom-4 left-4 flex flex-col gap-2" style={{ zIndex: 10 }}>
+            {/* 링크 공유 + 음성 채널 */}
+            <div className="flex gap-1.5">
+              <button
+                onClick={handleShare}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap"
+                style={{
+                  border: copied ? '1px solid rgba(64,184,112,0.5)' : '1px solid var(--border2)',
+                  background: copied ? 'rgba(64,184,112,0.15)' : 'rgba(13,13,26,0.9)',
+                  color: copied ? 'var(--success)' : 'var(--text2)',
+                  backdropFilter: 'blur(6px)',
+                }}
+              >
+                {copied ? '✓ 복사됨' : '🔗 링크 공유'}
+              </button>
+              <button
+                onClick={() => window.open(DISCORD_INVITE, '_blank')}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all whitespace-nowrap hover:brightness-110"
+                style={{ background: '#5865F2', color: '#fff', border: 'none', backdropFilter: 'blur(6px)' }}
+              >
+                <svg width="13" height="10" viewBox="0 0 71 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.4a40.8 40.8 0 0 0-1.8 3.7 54.1 54.1 0 0 0-16.3 0A40.8 40.8 0 0 0 25.6.4 58.4 58.4 0 0 0 11 4.9C1.6 18.9-1 32.6.3 46.1a58.9 58.9 0 0 0 18 9.1 44.5 44.5 0 0 0 3.8-6.3 38.4 38.4 0 0 1-6-2.9l1.5-1.1a41.9 41.9 0 0 0 35.7 0l1.5 1.1a38.3 38.3 0 0 1-6 2.9 44.5 44.5 0 0 0 3.9 6.3 58.7 58.7 0 0 0 17.9-9.1C72.2 30.4 68.8 16.8 60.1 4.9ZM23.7 37.9c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Z" fill="white"/>
+                </svg>
+                음성 채널
+              </button>
+            </div>
+
+            {/* 팀원 배치 오버레이 */}
+            <MemberOverlay onPlaceMember={placeMember} />
+          </div>
 
           {/* 상태 표시 */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4 rounded-full px-4 py-1.5 text-[11px] pointer-events-none" style={{ background: 'rgba(0,0,0,0.75)', border: '1px solid var(--border2)', color: 'var(--text2)' }}>

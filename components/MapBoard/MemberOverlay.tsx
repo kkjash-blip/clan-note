@@ -28,13 +28,12 @@ export default function MemberOverlay({ onPlaceMember }: Props) {
 
   return (
     <div
-      className="absolute bottom-4 left-4 flex flex-col rounded-xl overflow-hidden"
+      className="flex flex-col rounded-xl overflow-hidden"
       style={{
         width: '188px',
         background: 'rgba(13,13,26,0.9)',
         border: '1px solid var(--border2)',
         backdropFilter: 'blur(10px)',
-        zIndex: 10,
       }}
     >
       {/* 헤더 */}
