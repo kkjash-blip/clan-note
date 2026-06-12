@@ -77,6 +77,8 @@ export default function MapCanvas({ objects, preview, currentMap, cursor, onMous
   const wrapRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<Record<string, HTMLImageElement>>({});
 
+  const redrawRef = useRef(null as unknown as () => void);
+
   const redraw = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -103,6 +105,8 @@ export default function MapCanvas({ objects, preview, currentMap, cursor, onMous
     if (preview) drawObject(ctx, preview);
   }, [objects, preview, currentMap]);
 
+  redrawRef.current = redraw;
+
   useEffect(() => { redraw(); }, [redraw]);
 
   useEffect(() => {
@@ -111,22 +115,7 @@ export default function MapCanvas({ objects, preview, currentMap, cursor, onMous
       const img = new Image();
       img.onload = () => {
         imagesRef.current[key] = img;
-        const canvas = canvasRef.current;
-        if (canvas) {
-          const ctx = canvas.getContext('2d');
-          if (ctx) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#0d1117';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            const loaded = imagesRef.current[key];
-            const cw = canvas.width, ch = canvas.height;
-            const ir = loaded.width / loaded.height, cr = cw / ch;
-            let dw, dh, dx, dy;
-            if (ir > cr) { dw = cw; dh = dw / ir; dx = 0; dy = (ch - dh) / 2; }
-            else { dh = ch; dw = dh * ir; dx = (cw - dw) / 2; dy = 0; }
-            ctx.drawImage(loaded, dx, dy, dw, dh);
-          }
-        }
+        redrawRef.current();
       };
       img.onerror = () => console.error('Map image load failed: /maps/' + key + '.jpg');
       img.src = '/maps/' + key + '.jpg';
@@ -142,7 +131,7 @@ export default function MapCanvas({ objects, preview, currentMap, cursor, onMous
       if (r.width === 0 || r.height === 0) return;
       canvas.width = r.width;
       canvas.height = r.height;
-      redraw();
+      redrawRef.current();
     };
     resize();
     const t = setTimeout(resize, 50);
@@ -150,7 +139,7 @@ export default function MapCanvas({ objects, preview, currentMap, cursor, onMous
     if (wrapRef.current) ro.observe(wrapRef.current);
     window.addEventListener('resize', resize);
     return () => { clearTimeout(t); ro.disconnect(); window.removeEventListener('resize', resize); };
-  }, [redraw]);
+  }, []);
 
   const getPos = (e: React.MouseEvent) => {
     const r = canvasRef.current!.getBoundingClientRect();
